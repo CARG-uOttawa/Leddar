@@ -10,15 +10,19 @@ class DataRecorder:
     maximumRate = 5 #This value was found experimentally
 
     def getDevice()->leddar.Device:
+        '''Getter for the device object used currently'''
         return DataRecorder.dev
-    def setDevice(device):
+    def setDevice(device:leddar.Device):
+        '''Setter for the device object that should currently be used'''
         DataRecorder.dev = device  
     def getSamplingTime()->float:
+        '''Returns the waiting time before each read of the sensor'''
         return 1/float((DataRecorder.recordingRate))
     def setRecordingRate(rate):
         '''Sets the rates (in Hz) at which echoes are read'''
         DataRecorder.recordingRate = rate
     def initializeDevice():
+        '''Initializes the device to use the LeddarVu8'''
         DataRecorder.setDevice(leddar.Device())
         sensor_list = leddar.get_devices("Serial")
         DataRecorder.getDevice().connect(sensor_list[1]['name'], leddar.device_types["Serial"])
@@ -37,6 +41,7 @@ class DataRecorder:
         }
         return pd.DataFrame(data, index=pd.Index([echoes["timestamp"]], name='Timestamp'))
     def recordData(readTime, rate)->pd.DataFrame:
+        '''Records data accross time with a set sampling speed determined by the rate'''
         echoes = []
         DataRecorder.initializeDevice()
         DataRecorder.setRecordingRate(rate)
