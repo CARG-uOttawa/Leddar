@@ -34,8 +34,8 @@ class DataRecorder:
         for i in range(8):
             indexColumn = [a[0] for a in echoes["data"]]
             if i in indexColumn:
-                data["X Coord " + str(7-i)] = echoes["data"][indexColumn.index(i)][1]
-                data["Y Coord " + str(7-i)] = echoes["data"][indexColumn.index(i)][2]
+                data["X Coord " + str(7-i)] = echoes["data"][indexColumn.index(i)][5]
+                data["Y Coord " + str(7-i)] = echoes["data"][indexColumn.index(i)][6]
             else:
                 data["X Coord " + str(7-i)] = None
                 data["Y Coord " + str(7-i)] = None
