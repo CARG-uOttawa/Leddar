@@ -41,18 +41,18 @@ class DataRecorder:
         DataRecorder.initializeDevice()
         DataRecorder.setRecordingRate(rate)
         ticks = int((60*readTime)/DataRecorder.getSamplingTime())
-        # try:
-        for i in range(ticks):
-            data = DataRecorder.readData()
-            time.sleep(DataRecorder.getSamplingTime())
-            echoes.append(data)
-        # except Exception as error:
-            # print("An Error has occured while running the script: " + error)
-        # finally:
-        datas = pd.concat(echoes)
-        DataRecorder.getDevice().disconnect()
-        del DataRecorder.dev
-        return datas
+        try:
+            for i in range(ticks):
+                data = DataRecorder.readData()
+                time.sleep(DataRecorder.getSamplingTime())
+                echoes.append(data)
+        except Exception as error:
+            print("An Error has occured while running the script: " + error)
+        finally:
+            datas = pd.concat(echoes)
+            DataRecorder.getDevice().disconnect()
+            del DataRecorder.dev
+            return datas
 
 if __name__ == "__main__":
     
