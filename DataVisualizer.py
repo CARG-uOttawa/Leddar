@@ -19,6 +19,9 @@ def getSetPoints(data):
 
 vis = o3d.visualization.Visualizer()
 vis.create_window(height=480, width=640)
+ctr = vis.get_view_control()
+parameters = o3d.io.read_pinhole_camera_parameters("ScreenCamera.json")
+
 
 increment = 0
 while increment<data.shape[0]:
@@ -28,7 +31,9 @@ while increment<data.shape[0]:
     points = np.vstack(getSetPoints(data.iloc[increment])).transpose()
     pcd.points = o3d.utility.Vector3dVector(points)
     vis.add_geometry(pcd)
+    vis.add_geometry(o3d.utility.Vector3dVector(np.vstack(getSetPoints((0,0,0))).transpose()))
+    ctr.convert_from_pinhole_camera_parameters(parameters)
     vis.poll_events()
     vis.update_renderer()
     increment+=1
-    input()
+
